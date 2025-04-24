@@ -1502,6 +1502,14 @@ class SiteTree extends DataObject implements PermissionProvider,i18nEntityProvid
 	protected function onBeforeWrite() {
 		parent::onBeforeWrite();
 
+		if ($this->isChanged('CanViewType') && empty($this->CanViewType)) {
+			throw new Exception("SiteTree CanViewType cannot be empty!");
+		}
+
+		if ($this->isChanged('CanEditType') && empty($this->CanEditType)) {
+			throw new Exception("SiteTree CanEditType cannot be empty!");
+		}
+
 		// If Sort hasn't been set, make this page come after it's siblings
 		if(!$this->Sort) {
 			$parentID = ($this->ParentID) ? $this->ParentID : 0;
